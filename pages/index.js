@@ -60,7 +60,7 @@ export default function Home() {
             <Link href="/settings">
               <a className="p-5 rounded-lg">
                 <div className="cursor-pointer">
-                  <h1 className="text-5xl mb-4">Standomizer</h1>
+                  <h1 className="text-5xl mb-4">Team Shuffler</h1>
                   <p className="text-xl">Click here to add your team</p>
                 </div>
               </a>
