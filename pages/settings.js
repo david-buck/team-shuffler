@@ -29,7 +29,7 @@ export default function Home() {
   const [teamState, setTeamState] = useState([]);
 
   useEffect(() => {
-    setTeamState(team);
+    setTeamState(team || [""]);
   }, [team]);
 
   const handleInputChange = (value, index) => {
@@ -59,10 +59,11 @@ export default function Home() {
       </Head>
 
       <main className="flex flex-col gap-5">
-        {teamState.map((e, index) => (
+        {teamState?.map((e, index) => (
           <div className="flex gap-x-3" key={index}>
             <input
               className="p-2 text-2xl rounded-lg"
+              autoFocus
               value={e}
               onChange={(e) => {
                 handleInputChange(e.target.value, index);

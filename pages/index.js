@@ -33,7 +33,7 @@ export default function Home() {
 
   useEffect(() => {
     setShuffleTeam(shuffle(team));
-  }, [team, shuffles, shareTeamArray]);
+  }, [team, shuffles]);
 
   return (
     <div
@@ -50,11 +50,22 @@ export default function Home() {
 
       <main className="flex-1 grid place-content-center">
         <div className="flex flex-col gap-5">
-          {shuffleTeam?.map((e, key) => (
-            <div key={key} className="text-6xl">
-              {e}
-            </div>
-          ))}
+          {shuffleTeam.length > 0 ? (
+            shuffleTeam.map((e, key) => (
+              <div key={key} className="text-6xl">
+                {e}
+              </div>
+            ))
+          ) : (
+            <Link href="/settings">
+              <a className="p-5 rounded-lg">
+                <div className="cursor-pointer">
+                  <h1 className="text-5xl mb-4">Standomizer</h1>
+                  <p className="text-xl">Click here to add your team</p>
+                </div>
+              </a>
+            </Link>
+          )}
         </div>
       </main>
       <footer className="p-5 flex justify-between">
