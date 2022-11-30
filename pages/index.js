@@ -37,7 +37,7 @@ export default function Home() {
 
   return (
     <div
-      className="bg-gray-800 antialiased
+      className="bg-gray-900 antialiased
     text-white min-h-screen flex flex-col"
     >
       <Head>
@@ -49,10 +49,15 @@ export default function Home() {
       </Head>
 
       <main className="flex-1 grid place-content-center">
-        <div className="flex flex-col gap-5">
+        <div className="flex flex-col gap-2">
           {shuffleTeam.length > 0 ? (
             shuffleTeam.map((e, key) => (
-              <div key={key} className="text-6xl">
+              <div
+                key={key}
+                style={{
+                  fontSize: `${50 / shuffleTeam.length}vh`,
+                }}
+              >
                 {e}
               </div>
             ))
@@ -69,7 +74,18 @@ export default function Home() {
         </div>
       </main>
       <footer className="p-5 flex justify-between">
-        <button onClick={() => setShuffles(shuffles + 1)}>Randomize</button>
+        <div className="flex gap-x-4">
+          <button onClick={() => setShuffles(shuffles + 1)}>Shuffle</button>
+          <button
+            onClick={() =>
+              navigator.clipboard.writeText(
+                window.location.origin + "?shareteam=" + team.join(",")
+              )
+            }
+          >
+            Share
+          </button>
+        </div>
         <Link href="settings">Settings</Link>
       </footer>
     </div>

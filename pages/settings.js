@@ -44,12 +44,15 @@ export default function Home() {
   };
 
   const removeTeamMember = (index) => {
+    console;
     const nextState = teamState.filter((e, i) => i !== index);
     setTeamState(nextState);
   };
 
+  console.log("render");
+
   return (
-    <div className="bg-gray-700 min-h-screen grid place-content-center">
+    <div className="bg-purple-900 min-h-screen grid place-content-center">
       <Head>
         <title>Team Shuffler settings</title>
         <link
@@ -58,52 +61,62 @@ export default function Home() {
         />
       </Head>
 
-      <main className="flex flex-col gap-5">
-        {teamState?.map((e, index) => (
-          <div className="flex gap-x-3" key={index}>
-            <input
-              className="p-2 text-2xl rounded-lg"
-              autoFocus
-              value={e}
-              onChange={(e) => {
-                handleInputChange(e.target.value, index);
-                console.log(e.target.value);
-              }}
-            />
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          let newArray = [...teamState, ""];
+          setTeamState(newArray);
+        }}
+      >
+        <main className="flex flex-col gap-5">
+          {teamState?.map((e, index) => (
+            <div className="flex gap-x-3" key={index}>
+              <input
+                className="p-2 text-2xl rounded-lg"
+                autoFocus
+                value={e}
+                onChange={(e) => {
+                  handleInputChange(e.target.value, index);
+                }}
+              />
+              <button
+                className="bg-white grid place-content-center w-12 h-12 rounded-full ring-1 ring-white"
+                onClick={() => removeTeamMember(index)}
+                type="button"
+              >
+                <Cross />
+              </button>
+            </div>
+          ))}
+          <button
+            className="bg-white bg-opacity-80 p-2 text-2xl rounded-lg font-bold"
+            type="submit"
+          >
+            Add
+          </button>
+          {teamState.length > 0 && (
             <button
-              className="bg-white grid place-content-center w-12 h-12 rounded-full ring-1 ring-white"
-              onClick={() => removeTeamMember(index)}
+              className="bg-white bg-opacity-80 p-2 text-2xl rounded-lg font-bold"
+              onClick={() => {
+                router.push("/");
+                setTeam(teamState.filter((name) => name.trim() !== ""));
+              }}
+              type="button"
             >
-              <Cross />
+              Save
             </button>
-          </div>
-        ))}
-        <button
-          className="bg-white bg-opacity-80 p-2 text-2xl rounded-lg font-bold"
-          onClick={() => {
-            setTeamState([...teamState, ""]);
-          }}
-        >
-          Add
-        </button>
-        <button
-          className="bg-white bg-opacity-80 p-2 text-2xl rounded-lg font-bold"
-          onClick={() => {
-            setTeam(teamState);
-            router.push("/");
-          }}
-        >
-          Save
-        </button>
-        <button
-          className="p-2 text-2xl rounded-lg text-gray-200"
-          onClick={() => {
-            router.push("/");
-          }}
-        >
-          Cancel
-        </button>
-      </main>
+          )}
+          <button
+            className="p-2 text-2xl rounded-lg text-gray-200"
+            onClick={() => {
+              router.push("/");
+            }}
+            type="button"
+          >
+            Cancel
+          </button>
+        </main>
+      </form>
     </div>
   );
 }
