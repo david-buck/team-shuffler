@@ -26,6 +26,14 @@ export default function Home() {
   const [shuffleTeam, setShuffleTeam] = useState([]);
   const [shuffles, setShuffles] = useState(1);
 
+  const [showCopied, setShowCopied] = useState(false);
+
+  useEffect(() => {
+    if (showCopied === true) {
+      setTimeout(() => setShowCopied(false), 3000);
+    }
+  }, [showCopied]);
+
   useEffect(() => {
     shareTeamArray && setTeam(shareTeamArray);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -76,15 +84,25 @@ export default function Home() {
       <footer className="p-5 flex justify-between">
         <div className="flex gap-x-4">
           <button onClick={() => setShuffles(shuffles + 1)}>Shuffle</button>
-          <button
-            onClick={() =>
-              navigator.clipboard.writeText(
-                window.location.origin + "?shareteam=" + team.join(",")
-              )
-            }
-          >
-            Share
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  window.location.origin + "?shareteam=" + team.join(",")
+                );
+                setShowCopied(true);
+              }}
+            >
+              Share
+            </button>
+            <div
+              className={`${
+                showCopied ? "opacity-100 bottom-8" : "opacity-0 bottom-6"
+              } transition-all absolute select-none -left-4 whitespace-nowrap bg-black py-2 px-4 rounded`}
+            >
+              Team link copied to clipboard
+            </div>
+          </div>
         </div>
         <Link href="settings">Settings</Link>
       </footer>
