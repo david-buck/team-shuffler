@@ -7,10 +7,10 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-function MyApp({ Component, pageProps }) {
-  <main className={`${inter.variable} font-sans`}>
-    return <Component {...pageProps} />
-  </main>;
+export default function MyApp({ Component, pageProps }) {
+  return (
+    <main className={`${inter.variable} font-sans`}>
+      <Component {...pageProps} />
+    </main>
+  );
 }
-
-export default MyApp;
