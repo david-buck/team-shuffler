@@ -23,7 +23,7 @@ const Cross = () => (
   </svg>
 );
 
-export default function Home() {
+export default function Settings() {
   const router = useRouter();
   const [team, setTeam] = useLocalStorage("team");
   const [teamState, setTeamState] = useState([]);
@@ -68,7 +68,7 @@ export default function Home() {
           setTeamState(newArray);
         }}
       >
-        <main className="flex flex-col gap-5">
+        <main className="flex flex-col gap-5 py-10">
           {teamState?.map((e, index) => (
             <div className="flex gap-x-3" key={index}>
               <input
