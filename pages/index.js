@@ -35,7 +35,7 @@ export default function Home() {
   }, [showCopied]);
 
   useEffect(() => {
-    shareTeamArray && setTeam(shareTeamArray);
+    shareTeamArray?.length > 1 && setTeam(shareTeamArray);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shareteam]);
 
@@ -56,14 +56,14 @@ export default function Home() {
         />
       </Head>
 
-      <main className="flex-1 grid place-content-center">
+      <main className="flex-1 grid place-content-center py-10">
         <div className="flex flex-col gap-2 font-semibold">
           {shuffleTeam.length > 0 ? (
             shuffleTeam.map((e, key) => (
               <div
                 key={key}
                 style={{
-                  fontSize: `${50 / shuffleTeam.length}vh`,
+                  fontSize: `clamp(3rem, 8rem, ${50 / shuffleTeam.length}vh)`,
                 }}
               >
                 {e}
@@ -79,15 +79,17 @@ export default function Home() {
           )}
         </div>
       </main>
-      <footer className="p-5 flex justify-between">
+      <footer className="p-5 flex justify-between sticky bottom-0">
         <div className="flex gap-x-4">
           <button onClick={() => setShuffles(shuffles + 1)}>Shuffle</button>
           <div className="relative">
             <button
               onClick={() => {
-                navigator.clipboard.writeText(
-                  window.location.origin + "?shareteam=" + team.join(",")
-                );
+                navigator.clipboard.writeText(`
+                  ${window.location.origin}${
+                  team.length ? "?shareteam=" + team.join(",") : ""
+                }
+                `);
                 setShowCopied(true);
               }}
             >
@@ -98,7 +100,9 @@ export default function Home() {
                 showCopied ? "opacity-100 bottom-8" : "opacity-0 bottom-6"
               } transition-all absolute select-none -left-4 whitespace-nowrap bg-black py-2 px-4 rounded`}
             >
-              Team link copied to clipboard
+              {team.length
+                ? "Team link copied to clipboard"
+                : "Link copied to clipboard"}
             </div>
           </div>
         </div>
