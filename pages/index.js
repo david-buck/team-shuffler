@@ -63,7 +63,7 @@ export default function Home() {
               <div
                 key={key}
                 style={{
-                  fontSize: `clamp(3rem, ${50 / shuffleTeam.length}vh, 10rem)`,
+                  fontSize: `clamp(2rem, ${50 / shuffleTeam.length}vh, 10rem)`,
                 }}
               >
                 {e}
