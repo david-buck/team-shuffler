@@ -52,7 +52,7 @@ export default function Settings() {
   console.log("render");
 
   return (
-    <div className="bg-purple-900 min-h-screen grid place-content-center">
+    <div className="bg-zinc-800 min-h-screen grid place-content-center">
       <Head>
         <title>Team Shuffler settings</title>
         <link

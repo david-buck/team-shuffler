@@ -17,14 +17,17 @@ function shuffle(arr) {
 
 export default function Home() {
   const router = useRouter();
-  const { shareteam } = router.query;
+  const searchParams = new URLSearchParams(router.asPath.split("?")[1]);
 
+  const shareteam = searchParams.get("shareteam");
   const shareTeamArray = shareteam?.split(",");
 
   const [team, setTeam] = useLocalStorage("team", []);
 
   const [shuffleTeam, setShuffleTeam] = useState([]);
   const [shuffles, setShuffles] = useState(1);
+
+  const [copyMessage, setCopyMessage] = useState("");
 
   const [showCopied, setShowCopied] = useState(false);
 
@@ -45,7 +48,7 @@ export default function Home() {
 
   return (
     <div
-      className="bg-gray-900 antialiased
+      className="bg-zinc-950 antialiased
     text-white min-h-screen flex flex-col"
     >
       <Head>
@@ -85,24 +88,30 @@ export default function Home() {
           <div className="relative">
             <button
               onClick={() => {
-                navigator.clipboard.writeText(`
-                  ${window.location.origin}${
-                  team.length ? "?shareteam=" + team.join(",") : ""
+                const url = new URL(window.location.origin);
+                let message;
+                if (team.length) {
+                  const searchParams = new URLSearchParams();
+                  searchParams.set("shareteam", team.join(","));
+                  url.search = searchParams.toString();
+                  message = "Team link copied to clipboard";
+                } else {
+                  message = "Link copied to clipboard";
                 }
-                `);
+                navigator.clipboard.writeText(url.toString());
+                setCopyMessage(message);
                 setShowCopied(true);
               }}
             >
               Share
             </button>
+
             <div
               className={`${
                 showCopied ? "opacity-100 bottom-8" : "opacity-0 bottom-6"
               } transition-all absolute select-none -left-4 whitespace-nowrap bg-black py-2 px-4 rounded`}
             >
-              {team.length
-                ? "Team link copied to clipboard"
-                : "Link copied to clipboard"}
+              {copyMessage}
             </div>
           </div>
         </div>
