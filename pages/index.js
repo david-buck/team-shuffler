@@ -47,10 +47,7 @@ export default function Home() {
   }, [team, shuffles]);
 
   return (
-    <div
-      className="bg-zinc-950 antialiased
-    text-white min-h-screen flex flex-col"
-    >
+    <div className="flex min-h-screen flex-col bg-zinc-950 text-white antialiased">
       <Head>
         <title>Team Shuffler - the standup randomizer</title>
         <link
@@ -59,7 +56,7 @@ export default function Home() {
         />
       </Head>
 
-      <main className="flex-1 grid place-content-center py-10">
+      <main className="grid flex-1 place-content-center py-10">
         <div className="flex flex-col gap-2 font-semibold">
           {shuffleTeam.length > 0 ? (
             shuffleTeam.map((e, key) => (
@@ -73,16 +70,18 @@ export default function Home() {
               </div>
             ))
           ) : (
-            <Link href="/settings" className="p-5 rounded-lg">
+            <Link href="/settings" className="rounded-lg p-5">
               <div className="cursor-pointer">
-                <h1 className="text-5xl mb-4">Team Shuffler</h1>
-                <p className="text-xl">Click here to add your team</p>
+                <h1 className="mb-4 text-5xl">Team Shuffler</h1>
+                <p className="text-center text-xl">
+                  Click here to add your team
+                </p>
               </div>
             </Link>
           )}
         </div>
       </main>
-      <footer className="p-5 flex justify-between sticky bottom-0">
+      <footer className="sticky bottom-0 flex justify-between p-5">
         <div className="flex gap-x-4">
           <button onClick={() => setShuffles(shuffles + 1)}>Shuffle</button>
           <div className="relative">
@@ -108,8 +107,8 @@ export default function Home() {
 
             <div
               className={`${
-                showCopied ? "opacity-100 bottom-8" : "opacity-0 bottom-6"
-              } transition-all absolute select-none -left-4 whitespace-nowrap bg-black py-2 px-4 rounded`}
+                showCopied ? "bottom-8 opacity-100" : "bottom-6 opacity-0"
+              } absolute -left-4 select-none whitespace-nowrap rounded bg-black px-4 py-2 transition-all`}
             >
               {copyMessage}
             </div>

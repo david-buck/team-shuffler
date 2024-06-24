@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-
 import useLocalStorage from "../hooks/useLocalStorage";
 
 const Cross = () => (
@@ -26,33 +25,27 @@ const Cross = () => (
 export default function Settings() {
   const router = useRouter();
   const [team, setTeam] = useLocalStorage("team");
-  const [teamState, setTeamState] = useState([]);
+  const [teamState, setTeamState] = useState([""]);
 
   useEffect(() => {
-    setTeamState(team || [""]);
+    setTeamState(team && team.length > 0 ? team : [""]);
   }, [team]);
 
   const handleInputChange = (value, index) => {
-    const nextState = teamState.map((e, i) => {
-      if (i === index) {
-        return value;
-      } else {
-        return e;
-      }
-    });
+    const nextState = teamState.map((e, i) => (i === index ? value : e));
     setTeamState(nextState);
   };
 
   const removeTeamMember = (index) => {
-    console;
     const nextState = teamState.filter((e, i) => i !== index);
+    if (nextState.length === 0) {
+      nextState.push("");
+    }
     setTeamState(nextState);
   };
 
-  console.log("render");
-
   return (
-    <div className="bg-zinc-800 min-h-screen grid place-content-center">
+    <div className="grid min-h-screen place-content-center bg-zinc-900">
       <Head>
         <title>Team Shuffler settings</title>
         <link
@@ -64,23 +57,20 @@ export default function Settings() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          let newArray = [...teamState, ""];
-          setTeamState(newArray);
+          setTeamState([...teamState, ""]);
         }}
       >
         <main className="flex flex-col gap-5 py-10">
-          {teamState?.map((e, index) => (
+          {teamState.map((e, index) => (
             <div className="flex gap-x-3" key={index}>
               <input
-                className="p-2 text-2xl rounded-lg"
+                className="rounded-lg p-2 text-2xl"
                 autoFocus
                 value={e}
-                onChange={(e) => {
-                  handleInputChange(e.target.value, index);
-                }}
+                onChange={(e) => handleInputChange(e.target.value, index)}
               />
               <button
-                className="bg-white grid place-content-center w-12 h-12 rounded-full ring-1 ring-white"
+                className="grid h-12 w-12 place-content-center rounded-full bg-white ring-1 ring-white"
                 onClick={() => removeTeamMember(index)}
                 type="button"
               >
@@ -89,14 +79,14 @@ export default function Settings() {
             </div>
           ))}
           <button
-            className="bg-white bg-opacity-80 p-2 text-2xl rounded-lg font-bold"
+            className="rounded-lg bg-green-600 p-2 text-2xl font-semibold text-white transition-colors hover:bg-green-500"
             type="submit"
           >
             Add
           </button>
           {teamState.length > 0 && (
             <button
-              className="bg-white bg-opacity-80 p-2 text-2xl rounded-lg font-bold"
+              className="rounded-lg bg-blue-600 p-2 text-2xl font-semibold text-white transition-colors hover:bg-blue-500"
               onClick={() => {
                 router.push("/");
                 setTeam(teamState.filter((name) => name.trim() !== ""));
@@ -107,7 +97,7 @@ export default function Settings() {
             </button>
           )}
           <button
-            className="p-2 text-2xl rounded-lg text-gray-200"
+            className="rounded-lg p-2 text-2xl text-gray-200"
             onClick={() => {
               router.push("/");
             }}
