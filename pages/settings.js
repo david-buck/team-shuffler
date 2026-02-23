@@ -64,7 +64,7 @@ export default function Settings() {
           {teamState.map((e, index) => (
             <div className="flex gap-x-3" key={index}>
               <input
-                className="rounded-lg p-2 text-2xl"
+                className="w-80 rounded-lg border border-zinc-700 bg-zinc-800 px-3 py-2 text-2xl text-zinc-100 placeholder:text-zinc-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                 autoFocus
                 value={e}
                 onChange={(e) => handleInputChange(e.target.value, index)}
