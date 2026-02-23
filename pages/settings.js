@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import useLocalStorage from "../hooks/useLocalStorage";
@@ -25,11 +25,9 @@ const Cross = () => (
 export default function Settings() {
   const router = useRouter();
   const [team, setTeam] = useLocalStorage("team");
-  const [teamState, setTeamState] = useState([""]);
-
-  useEffect(() => {
-    setTeamState(team && team.length > 0 ? team : [""]);
-  }, [team]);
+  const [teamState, setTeamState] = useState(() =>
+    team && team.length > 0 ? team : [""],
+  );
 
   const handleInputChange = (value, index) => {
     const nextState = teamState.map((e, i) => (i === index ? value : e));
